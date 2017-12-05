@@ -8,6 +8,12 @@
             <h2>Tasks</h2>
             <ul class="list-group">
                 @foreach ($tasks as $task)
+                    <a
+                        href="{{ url('tasks') }}?action=edit&id={{ $task->id }}"
+                        id="edit_task_{{ $task->id }}"
+                        class="pull-right">
+                        edit
+                    </a>
                     <li class="list-group-item">
                         {{ $task->name }} <br>
                         {{ $task->description }}
