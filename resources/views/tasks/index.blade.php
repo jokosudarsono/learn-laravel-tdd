@@ -8,13 +8,13 @@
             <h2>Tasks</h2>
             <ul class="list-group">
                 @foreach ($tasks as $task)
-                    <a
-                        href="{{ url('tasks') }}?action=edit&id={{ $task->id }}"
-                        id="edit_task_{{ $task->id }}"
-                        class="pull-right">
-                        edit
-                    </a>
                     <li class="list-group-item">
+                        <a
+                            href="{{ url('tasks') }}?action=edit&id={{ $task->id }}"
+                            id="edit_task_{{ $task->id }}"
+                            class="pull-right">
+                            edit
+                        </a>
                         {{ $task->name }} <br>
                         {{ $task->description }}
                     </li>
@@ -22,6 +22,23 @@
             </ul>
         </div>
         <div class="col-md-4">
+
+            @if (! is_null($editableTask) && request('action') == 'edit')
+            <form id="edit_task_{{ $editableTask->id }}" action="{{ url('tasks/'.$editableTask->id) }}" method="post">
+                {{ csrf_field() }}
+                {{ method_field('patch') }}
+                <div class="form-group">
+                    <label for="name" class="control-lable">Name</label>
+                    <input id="name" name="name" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="description" class="control-lable">Description</label>
+                    <textarea id="description" name="description" class="form-control"></textarea>
+                </div>
+                <input type="submit" value="Update Task" class="btn btn-primary">
+            </form>
+            @endif
+
             <h2>New Task</h2>
 
             @if (count($errors) > 0)
